@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        #qrResult img {
+            margin-top: 20px;
+            max-width: 300px;
+            border: 5px solid white;
+            box-shadow: 0 0 10px #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <input type="text" id="text" placeholder="Enter text or URL" />
+    <button onclick="generateQR()">Generate</button>
+    <div id="qrResult"></div>
+
+    <script>
+        function generateQR() {
+            const text = document.getElementById('text').value;
+            axios.get(`/generate-qr?data=${encodeURIComponent(text)}`)
+                .then(function (response) {
+                    const img = `<img src="data:image/png;base64,${response.data}" alt="QR Code" />`;
+                    document.getElementById('qrResult').innerHTML = img;
+                })
+                .catch(function (error) {
+                    console.error('Error generating QR code:', error);
+                });
+        }
+    </script>
+</body>
+</html>
