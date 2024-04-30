@@ -20,7 +20,7 @@
             const text = document.getElementById('text').value;
             axios.get(`/.netlify/functions/generateQR?data=${encodeURIComponent(text)}`)
                 .then(function (response) {
-                    const img = `<img src="data:image/png;base64,${response.data}" alt="QR Code" />`;
+                    const img = `<img src="data:image/png;base64,${response.data}" alt="QR Code">`;
                     document.getElementById('qrResult').innerHTML = img;
                 })
                 .catch(function (error) {

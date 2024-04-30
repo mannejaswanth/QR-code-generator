@@ -11,12 +11,11 @@ exports.handler = async (event) => {
     }
     try {
         const qr_png = qr.imageSync(data, { type: 'png' });
-        const qr_png_base64 = qr_png.toString('base64');
+        const qr_png_base64 = Buffer.from(qr_png).toString('base64');
         return {
             statusCode: 200,
-            headers: { 'Content-Type': 'image/png' },
-            body: qr_png_base64,
-            isBase64Encoded: true
+            headers: { 'Content-Type': 'text/plain' }, // Use 'text/plain' for base64 string
+            body: qr_png_base64
         };
     } catch (err) {
         return {
